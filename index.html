@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>.highlight{background-color: yellow}</style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        function create_table() {
+            var data = $.mydata.text.split(/\n/);
+            var html = '<div id="result" style="display:none">\n<table id="questions">\n';
+            for(var j = 0; j < data.length; j += 1) {
+                var dataFields = data[j].split('#');
+                if (dataFields[1] != null 
+                && dataFields[1] != '" "') {
+                    q = '^"'+$.mydata.currentkey+'\\.[0-9]*"';
+                    c = $.mydata.currentkey;
+                    d1 = dataFields[1];
+                    //first pass
+                    if (c == "") { if (d1[2] == '.') { continue; } }
+                    else if (!(d1.match(new RegExp(q, 'i')))) { continue; }
+                    var k=dataFields[1].replace(/\"/g,'');
+                    var v=dataFields[2];
+                    html += '<tr>\n';
+                    html += '<td>\n<input class="replies" type="button" value="' + k + '" name="' + k + '" />\n</td>\n';
+                    html += '<td>\n' + v + '\n</td>\n';
+                    html += '</tr>\n';
+                }
+            }
+            html += '</table>\n</div>\n';
+            console.log(html);
+            if (html == '<div id="result" style="display:none">\n<table id="questions">\n</table>\n</div>\n') {
+                html = '<div id="result" style="display:none"><table id="questions">\n<tr>\n<td>\nΔεν υπάρχουν περαιτέρω βήματα.</td>\n</tr>\n</table>\n</div>\n';
+            }
+            //$(html).appendTo('body');
+            $('#answers').append(html);
+            $("tr:even").css("background-color", "#C2E053");
+            $("tr:odd").css("background-color", "#E2E3DE");
+            $("#result").show('slow');
+            $(".replies").attr('onclick','$.mydata.currentkey = $(this).attr("name"); recreate_table();');
+        }
+        
+        function recreate_table() {
+            $("#result").hide('slow', function () {
+                $(this).remove();
+                create_table();
+            });
+        }
+        
+        function begin_again() {
+            $.mydata.currentkey = "";
+            recreate_table();
+        }
+        
+        function go_back() {
+            //Remove last ".number"
+            $.mydata.currentkey = $.mydata.currentkey.replace(/(\.[0-9]*)$/, '');
+            recreate_table();
+        }
+        
+        $(document).ready(function() {
+            $.mydata = {file: "data.csv", text: "", currentkey: ""};
+            if ($.mydata.text == "") { //Text not set! Reading from file
+                $.ajax({
+                    url: $.mydata.file,
+                    beforeSend: function(xhr) {
+                        xhr.overrideMimeType('text/plain; charset=UTF-8');
+                    },
+                    async: false, //wait until it's finished
+                    success: function(data) {
+                        $.mydata.text = data.slice(0);
+                    }
+                });
+            }
+            function main() { create_table(); }
+            main();
+        });
+    </script>
+</head>
+<body>
+    <div id="menu">
+        <input type="button" value="Άρχισε ξανά" onclick="begin_again();" />
+        <input type="button" value="Πήγαινε πίσω" onclick="go_back();" />
+    </div>
+    <div id="answers">
+    </div>
+</body>
+</html>
