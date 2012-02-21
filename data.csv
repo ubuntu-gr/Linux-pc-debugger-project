@@ -169,3 +169,11 @@
 #"4.6.1.1"#"Δείτε το Κέντρο λογισμικού, περισσότερα στο forum<br><a href=""http://forum.ubuntu-gr.org/viewtopic.php?f=9&t=254""  target=""_blank"" >Πως να εγκαταστήσετε προγράμματα στο Ubuntu/Kubuntu</a>"
 #"4.6.2"#"Θέλω να εγκαταστήσω ένα πακέτο .rpm. (δεν συνίσταται, μόνο όταν είναι αναγκαίο)."
 #"4.6.2.1"#"Έστω ότι θέλουμε νε εγκαταστήσουμε το rpm<br> http://www.swi-prolog.org/download/stable/bin/swipl-5.10.2-385.i586.rpm<br><br>Γράφουμε :<br><br>sudo apt-get install alien<br>wget http://www.swi-prolog.org/download/stable/bin/swipl-5.10.2-385.i586.rpm<br>sudo alien swipl-5.10.2-385.i586.rpm<br>sudo dpkg -i swipl_5.10.2-386_i386.deb<br><br>Μετά γράφουμε για να το φορτώσουμε<br>swipl"
+#" "#
+#"4.7"#"Πρόβλημα με το xampp."
+#"4.7.1"#"Πρόβλημα εκκίνησης/τερματισμού της υπηρεσίας mysql."
+#"4.7.1.1"#"Άνοιξε το τερματικό με Ctrl+Alt+T και εκτέλεσε:<br><pre>ps aux | grep mysql</pre><br>Σκότωσε με<br>sudo kill -9 <mysql_PID> <br>την διεργασία και ξαναπροσπάθησε. Αν υπάρχει ακόμη πρόβλημα εκτέλεσε:<br> sudo service mysql stop."<br>
+#"4.7.2"#"Μήνυμα λάθους #2002 κατα την εισαγωγή στο http://localhost/phpmyadmin/"
+#"4.7.2.1"#""
+#"4.7.3"#"Πρόβλημα εκκίνησης/τερματισμού του server apache ."
+#"4.7.3.1"#"Άνοιξε το τερματικό με Ctrl+Alt+T και εκτέλεσε<br><pre>ps aux | grep apache</pre><br>Σκότωσε με<br>sudo kill -9 <mysql_PID> <br>την διεργασία και ξαναπροσπάθησε."
